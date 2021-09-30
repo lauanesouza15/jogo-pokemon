@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Quem é esse Pokémon?</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+</head>
+<body>
+    <form method="get" action=".">
+        <input type="text" id="txtPokemon" class="digita-pokemon" value="Digite aqui" size="10" />
+        <br/>
+        <input type="button" id="btnValidar" value="Validar" class="botao" onclick="validar()" />
+        <br/>
+        <br/>
+        <img src="" id="imgPokemon" class="imagem-pokemon" />
+    </form>
+
+    <audio src="midia/quem_pokemon.mp3" id="audio" autoplay="" muted>
+        
+    </audio>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+            
+    <script type="text/javascript">
+
+        var pokemon = "";
+
+        function validar() {
+            $("#imgPokemon").css("filter", "brightness(1)");
+            $("#imgPokemon").css("-webkit-filter", "brightness(1)");
+            $("#imgPokemon").css("-moz-filter", "brightness(1)");
+            pokeAdivinhacao = $("#txtPokemon").val().toUpperCase();
+            $("#txtPokemon").val("É o " + pokemon);
+
+            if (pokemon.toUpperCase() == pokeAdivinhacao) {
+                alert("Muito bem! Você é um mestre Pokémon!");
+            } else {
+                alert("Errooooou!");
+            }
+
+            setTimeout(reinicia, 2000);
+        }
+
+        function reinicia() {
+            // Limpa valores do formulário de cep.
+            $("#txtPokemon").val("Digite aqui");
+
+            pesquisaPokemon();
+        }
+
+        //Quando o campo cep perde o foco.
+        function pesquisaPokemon() {
+            url = 'https://pokeapi.co/api/v2/pokemon/' + (1 + Math.floor(Math.random() * 149));
+            //Consulta o webservice pokeapi
+            $.getJSON(url, function(dados) {
+
+                if (!("Not Found" in dados)) {
+                    pokemon = dados.name;
+                    //Atualiza os campos com os valores da consulta.
+                    $("#imgPokemon").attr("src", dados.sprites.other.dream_world.front_default);
+                    $("#imgPokemon").css("filter", "brightness(0)");
+                    $("#imgPokemon").css("-webkit-filter", "brightness(0)");
+                    $("#imgPokemon").css("-moz-filter", "brightness(0)");
+                    document.getElementById("audio").muted = false;
+                    document.getElementById("audio").play();
+                }
+                else {
+                    //CEP pesquisado não foi encontrado.
+                    reinicia();
+                    alert("Pokémon não encontrado");
+                }
+            });
+        };
+
+        $(document).ready(function() {
+            $("#txtPokemon").click(function(){
+                $(this).val("");
+            });
+
+            setTimeout(reinicia, 200);
+        });
+    
+    </script>
+</body>
+
+</html>

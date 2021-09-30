@@ -1,0 +1,31 @@
+body {
+    background-image: url("../img/fundo.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: #cc3333;
+}
+
+.digita-pokemon {
+    border-width: 0px;
+    font-size: 100px;
+    -webkit-text-stroke: 7.5px;
+    -webkit-text-stroke-color: #3f6ab4;
+    text-shadow: -10px 10px 0px #245699;
+    font-family: 'Pokemon Solid';
+    color: #f9cd16;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.botao {
+    font-size: 50px;
+}
+
+.imagem-pokemon {
+    width: 20%;
+    margin-left: 50px;
+}
+
+@font-face {
+    font-family: 'Pokemon Solid';
+    src: url('../font/Pokemon\ Solid.ttf')  format('truetype')
+  }
